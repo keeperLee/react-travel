@@ -36,7 +36,15 @@ class App extends React.Component<Props, State>{
                     <h1>罗伯特机器人炫酷吊炸天online购物平台的名字要长</h1>
                 </div>
                 <button onClick={()=>{
-                    this.setState({count:this.state.count + 1},()=>{
+                    this.setState((preState,preProps)=>{
+                        return {count:preState.count + 1}
+                    },()=>{
+                        console.log("count",this.state.count)
+                    })
+
+                    this.setState((preState,preProps)=>{
+                        return {count:preState.count + 1}
+                    },()=>{
                         console.log("count",this.state.count)
                     })
                 }}>Click</button>
