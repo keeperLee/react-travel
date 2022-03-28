@@ -14,6 +14,8 @@ interface State {
 
 class App extends React.Component<Props, State>{
 
+    // *生命周期第一阶段：初始化
+    // 初始化组件 state
     constructor(props) {
         super(props);
         this.state = {
@@ -22,10 +24,20 @@ class App extends React.Component<Props, State>{
         }
     }
 
+    //在组件创建好DOM元素后、挂载进页面的时候调用
     componentDidMount() {
         fetch("https://jsonplaceholder.typicode.com/users")
             .then(response => response.json())
             .then(data=>this.setState({robotGallery:data}))
+    }
+
+    // *生命周期第二阶段：更新
+    // 组件更新后调用
+    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any) {
+    }
+
+    // *生命周期第三阶段：销毁
+    componentWillUnmount() {
     }
 
     render(){
