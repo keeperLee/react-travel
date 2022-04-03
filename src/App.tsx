@@ -15,10 +15,13 @@ const App: React.FC = () => {
     }, [count])
 
     useEffect(() => {
-        fetch("https://jsonplaceholder.typicode.com/users")
-            .then(response => response.json())
-            .then(data => setRobotGallery(data))
-    },[])
+        const fetchData = async () => {
+            const responses = await fetch("https://jsonplaceholder.typicode.com/users")
+            const data = await responses.json()
+            setRobotGallery(data)
+        }
+        fetchData()
+    }, [])
 
     return (
         <div className={styles.app}>
