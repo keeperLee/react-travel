@@ -10,6 +10,7 @@ const App: React.FC = () => {
     const [count, setCount] = useState<number>(0)
     const [robotGallery, setRobotGallery] = useState<any>([])
     const [loading, setLoading] = useState<boolean>(false)
+    const [error, setError] = useState<string>()
 
     useEffect(() => {
         document.title = `点击${count}次`
@@ -18,9 +19,15 @@ const App: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true)
-            const responses = await fetch("https://jsonplaceholder.typicode.com/users")
-            const data = await responses.json()
-            setRobotGallery(data)
+            try {
+                const responses = await fetch("https://jsonplaceholder.typicode.com/users")
+                const data = await responses.json()
+                setRobotGallery(data)
+            } catch (e) {
+                if(e instanceof Error){
+                    setError(e.message)
+                }
+            }
             setLoading(false)
         }
         fetchData()
@@ -38,6 +45,7 @@ const App: React.FC = () => {
             </button>
             <span>count:{count}</span>
             <ShoppingCart/>
+            { (!error || error !=="") && <div>网站出错：{error}</div>}
             {
                 !loading ? (
                         <div className={styles.robotList}>
