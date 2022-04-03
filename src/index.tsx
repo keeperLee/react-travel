@@ -4,11 +4,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const username = '你是大帅哥'
+// const username = '你是大帅哥'
+
+const defaultContextValue = {
+    username:'你是大叔啊'
+}
+export const appContext = React.createContext(defaultContextValue)
 
 ReactDOM.render(
   <React.StrictMode>
-    <App username={username}/>
+      <appContext.Provider value={defaultContextValue}>
+          <App/>
+      </appContext.Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
