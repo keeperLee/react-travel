@@ -9,6 +9,7 @@ import ShoppingCart from "./components/ShoppingCart";
 const App: React.FC = () => {
     const [count, setCount] = useState<number>(0)
     const [robotGallery, setRobotGallery] = useState<any>([])
+    const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
         document.title = `点击${count}次`
@@ -16,9 +17,11 @@ const App: React.FC = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true)
             const responses = await fetch("https://jsonplaceholder.typicode.com/users")
             const data = await responses.json()
             setRobotGallery(data)
+            setLoading(false)
         }
         fetchData()
     }, [])
@@ -35,13 +38,21 @@ const App: React.FC = () => {
             </button>
             <span>count:{count}</span>
             <ShoppingCart/>
-            <div className={styles.robotList}>
-                {
-                    robotGallery.map((r) => (
-                        <Robot id={r.id} name={r.name} email={r.email}/>
-                    ))
-                }
-            </div>
+            {
+                !loading ? (
+                        <div className={styles.robotList}>
+                            {
+                                robotGallery.map((r) => (
+                                    <Robot id={r.id} name={r.name} email={r.email}/>
+                                ))
+                            }
+                        </div>
+                    )
+                    : (
+                        <h2>Loading加载中</h2>
+                    )
+            }
+
         </div>
     );
 }
