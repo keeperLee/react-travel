@@ -2,9 +2,9 @@ import React, {useState, useEffect} from 'react';
 import styles from "./App.module.css";
 // import robots from './mockdata/robots.json'
 import Robot from './components/Robot'
+import RobotDiscount from './components/RobotDiscount'
 import logo from "./assets/images/logo.svg"
 import ShoppingCart from "./components/ShoppingCart";
-
 
 
 const App: React.FC = () => {
@@ -25,7 +25,7 @@ const App: React.FC = () => {
                 const data = await responses.json()
                 setRobotGallery(data)
             } catch (e) {
-                if(e instanceof Error){
+                if (e instanceof Error) {
                     setError(e.message)
                 }
             }
@@ -46,14 +46,18 @@ const App: React.FC = () => {
             </button>
             <span>count:{count}</span>
             <ShoppingCart/>
-            { (error && error !=="") && <div>网站出错：{error}</div>}
+            {(error && error !== "") && <div>网站出错：{error}</div>}
             {
                 !loading ? (
                         <div className={styles.robotList}>
                             {
-                                robotGallery.map((r) => (
-                                    <Robot id={r.id} name={r.name} email={r.email}/>
-                                ))
+                                robotGallery.map((r, index) =>
+                                    index % 2 === 0 ? (
+                                        <RobotDiscount id={r.id} name={r.name} email={r.email}/>
+                                    ) : (
+                                        <Robot id={r.id} name={r.name} email={r.email}/>
+
+                                    ))
                             }
                         </div>
                     )
